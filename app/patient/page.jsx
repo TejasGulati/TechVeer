@@ -57,9 +57,9 @@ export default function PatientPortal() {
   ];
 
   const awardedDoctors = [
-    { id: 'a1', name: 'Dr. Priya Nanda', dept: 'Pediatrics', award: 'Best Pediatrician 2023', img: '/doctor5.jpg' },
-    { id: 'a2', name: 'Dr. Raj Malhotra', dept: 'Orthopedic', award: 'Top Surgeon 2022', img: '/doctor6.jpg' },
-    { id: 'a3', name: 'Dr. Reena Shah', dept: 'Dermatology', award: 'Skin Expert 2023', img: '/doctor7.jpg' },
+    { id: 'a1', name: 'Dr. Priya Nanda', dept: 'Pediatrics', award: 'Best Pediatrician 2023', img: '/doctor1.jpg' },
+    { id: 'a2', name: 'Dr. Raj Malhotra', dept: 'Orthopedic', award: 'Top Surgeon 2022', img: '/doctor2.jpg' },
+    { id: 'a3', name: 'Dr. Reena Shah', dept: 'Dermatology', award: 'Skin Expert 2023', img: '/doctor3.jpg' },
   ];
 
   // demo stateful data (simple state version)
@@ -262,10 +262,10 @@ export default function PatientPortal() {
           </motion.div>
         ) : (
           // DASHBOARD
-          <div className="grid grid-cols-12 gap-6">
+          <div className="grid grid-cols-12 gap-5 mr-10 ">
             {/* LEFT SIDEBAR */}
-            <motion.aside initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="col-span-12 md:col-span-2 bg-white/10 backdrop-blur-2xl rounded-3xl p-6 border border-white/20">
-              <h3 className="text-white font-semibold mb-4">Patient</h3>
+            <motion.aside initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="col-span-12 md:col-span-2 mr-2 bg-white/10 backdrop-blur-2xl rounded-3xl p-6 border border-white/20">
+              <h3 className="text-white font-semibold mb-4 ">Patient</h3>
 
               <div className="space-y-3">
                 <button onClick={() => setLeftTab('profile')} className={`flex items-center gap-3 w-full text-left p-3 rounded-lg hover:bg-white/10 transition text-white`}> <User className="w-4 h-4" /> <span className="font-medium">My Details</span></button>
@@ -491,26 +491,59 @@ export default function PatientPortal() {
             </main>
 
             {/* RIGHT sidebar - FIXED height + internal scroll to prevent overflow */}
-            <aside className="col-span-12 md:col-span-3">
-              <div className="bg-white/10 backdrop-blur-2xl rounded-3xl p-6 border border-white/20 h-[70vh] overflow-auto sticky top-6">
-                <h3 className="text-white font-semibold mb-4">🏅 Awarded Doctors</h3>
+          <aside className="col-span-12 md:col-span-3">
+  <div className="relative ml-10 bg-gradient-to-b from-[#3b82f6]/40 to-[#1e3a8a]/40 backdrop-blur-2xl rounded-3xl p-6 border border-white/20 h-[95vh] overflow-hidden sticky top-6">
+    {/* Title */}
+    <h3 className="text-white font-semibold text-lg mb-6 relative z-20 flex items-center gap-2">
+      🏅 <span>Awarded Doctors</span>
+    </h3>
 
-                <motion.div animate={{ y: ['0%', '-100%'] }} transition={{ duration: 12, repeat: Infinity, ease: 'linear' }} className="space-y-4">
-                  {awardedDoctors.concat(awardedDoctors).map((doc, i) => (
-                    <div key={i} className="flex gap-3 items-center bg-white/5 p-3 rounded-lg text-white">
-                      <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
-                        <Image src={doc.img} alt={doc.name} width={48} height={48} className="object-cover" />
-                      </div>
-                      <div>
-                        <div className="font-semibold">{doc.name}</div>
-                        <div className="text-xs">{doc.dept}</div>
-                        <div className="text-xs text-indigo-200">{doc.award}</div>
-                      </div>
-                    </div>
-                  ))}
-                </motion.div>
-              </div>
-            </aside>
+    {/* Container for Scrolling Cards */}
+    <div className="relative h-[calc(100%-80px)] overflow-hidden">
+      {/* Animated Doctor List */}
+      <motion.div
+        animate={{ y: ["0%", "-50%"] }}
+        transition={{
+          duration: 22,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        className="space-y-4"
+      >
+        {awardedDoctors.concat(awardedDoctors).map((doc, i) => (
+          <div
+            key={i}
+            className="flex gap-3 items-center bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-md p-3 rounded-xl text-white shadow-md"
+          >
+            <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
+              <Image
+                src={doc.img}
+                alt={doc.name}
+                width={48}
+                height={48}
+                className="object-cover"
+              />
+            </div>
+            <div>
+              <div className="font-semibold leading-tight">{doc.name}</div>
+              <div className="text-xs opacity-90">{doc.dept}</div>
+              <div className="text-xs text-indigo-200">{doc.award}</div>
+            </div>
+          </div>
+        ))}
+      </motion.div>
+
+      {/* Gradient Fade — Top (starts right below title) */}
+      <div className="absolute top-0 left-0 w-full h-12 bg-gradient-to-b from-[#0b1e3f]/90 via-[#0b1e3f]/40 to-transparent z-10 pointer-events-none"></div>
+
+      {/* Gradient Fade — Bottom */}
+      <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-[#0b1e3f]/90 via-[#0b1e3f]/40 to-transparent z-10 pointer-events-none"></div>
+    </div>
+  </div>
+</aside>
+
+
+
           </div>
         )}
       </div>
